@@ -31,28 +31,37 @@ module.exports = yeoman.Base.extend({
     return this.prompt(prompts).then(function (answers) {
       var self = this;
       var tmpSizes = answers.sizes.replace(/\s/g, '').split(',');
+      var numSizes = tmpSizes.length;
       var sizes = [];
+      var value;
+      var dimensions;
+      var width;
+      var height;
 
-      tmpSizes.forEach(function (value) {
-        var dimensions = value.split('x');
+      for (var i = 0; i < numSizes; i++) {
+        value = tmpSizes[i];
+        dimensions = value.split('x');
 
         if (!dimensions[0] || !dimensions[1]) {
-          return self.env.error(chalk.red('Invalid dimensions entered: ' + value));
+          self.env.error(chalk.red('Invalid dimensions entered: ' + value));
+          break;
         }
 
-        var width = Math.floor(dimensions[0]).toString();
-        var height = Math.floor(dimensions[1]).toString();
+        width = Math.floor(dimensions[0]).toString();
+        height = Math.floor(dimensions[1]).toString();
 
         if (width !== dimensions[0]) {
-          return self.env.error(chalk.red('Invalid width entered in the following banner size: ' + value));
+          self.env.error(chalk.red('Invalid width entered in the following banner size: ' + value));
+          break;
         }
 
         if (height !== dimensions[1]) {
-          return self.env.error(chalk.red('Invalid height entered in the following banner size: ' + value));
+          self.env.error(chalk.red('Invalid height entered in the following banner size: ' + value));
+          break;
         }
 
         sizes.push([width, height]);
-      });
+      }
 
       this.props = {};
       this.props.sizes = sizes;
