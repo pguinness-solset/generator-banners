@@ -1,69 +1,16 @@
 <!DOCTYPE html>
-<html>
 <head>
 	<meta charset="utf-8" />
 	<meta name="viewport" content="width=device-width, initial-scale=1" />
-  <meta name="ad.size" content="height=<%= height %>,width=<%= width %>" />
-  <title><%= campaignName %> | <%= width %>x<%= height %></title>
-
-  <!--CDN links for the latest TweenLite, CSSPlugin, and EasePack-->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/latest/TweenLite.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/latest/plugins/CSSPlugin.min.js"></script>
-  
-  <% if (includeEnabler) { %>
-  <!--DoubleClick Enabler Script-->
-  <script src="https://s0.2mdn.net/ads/studio/Enabler.js"></script>
-  <% } else { %>
-  <script type="text/javascript">
-    var clickTag = "http://google.com/";
-  </script>
-  <% } %>
-
-  <style type="text/css">
-  /* Include your CSS here */
-  </style>
+	<title><%= campaignName %> Banners</title>
 </head>
 <body>
-  <!-- Insert your markup here -->
-  <% if (includeEnabler) { %>
-  <a id="clickthru" href="#">Sample clickthru</a> | <a id="replay" href="#">Replay</a>
-  <% } else { %>
-  <a href="javascript:window.open(window.clickTag)">Click Me</a>
-  <% } %>
-  <!-- End markup -->
+	<h1><%= campaignName %> Banners</h1>
 
-  <script type="text/javascript">
-    <% if (includeEnabler) { %>
-    // If true, start function. If false, listen for INIT.
-    window.onload = function() {
-      if (Enabler.isInitialized()) {
-        init();
-      } else {
-        Enabler.addEventListener(studio.events.StudioEvent.INIT, init);
-      }
-    }
-    // Wait for the page body to load
-    function init() {
-      if (Enabler.isPageLoaded()) {
-        politeInit();
-      } else {
-        Enabler.addEventListener(studio.events.StudioEvent.PAGE_LOADED, politeInit);
-      }
-    }
-    function politeInit(){
-      addEventListeners();
-    }
-    function addEventListeners() {
-      document.getElementById('clickthru').addEventListener("click",clickThrough, false);
-      document.getElementById('replay').addEventListener("click",replayAnimation, false);
-    }
-
-    // Exits
-    function clickThrough() {
-      Enabler.exit('Background Exit');
-    }
-    <% } %>
-    // Include Javascript here
-  </script>
+	<ul>
+		<% sizes.forEach(function (value) { -%>
+		<li><a href="./<%= value[0] %>x<%= value[1] %>/"><%= value[0] %>x<%= value[1] %></a></li>
+		<% }) -%>
+	</ul>
 </body>
 </html>

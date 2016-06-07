@@ -4,6 +4,8 @@ var chalk = require('chalk');
 var yosay = require('yosay');
 
 module.exports = yeoman.Base.extend({
+
+  // Prompt user for project info before install
   prompting: function () {
     
     var done = this.async();
@@ -67,6 +69,7 @@ module.exports = yeoman.Base.extend({
     }.bind(this));
   },
 
+  // Create scaffold files
   writing: function () {
 
     var self = this;
@@ -85,11 +88,11 @@ module.exports = yeoman.Base.extend({
 
       var width = value[0];
       var height = value[1];
-      var fileName = width + 'x' + height + '.html';
+      var dirName = width + 'x' + height;
 
       self.fs.copyTpl(
-        self.templatePath('index.html'),
-        self.destinationPath(fileName),
+        self.templatePath('banner.html'),
+        self.destinationPath(dirName + '/index.html'),
         {
           width: width,
           height: height,
@@ -98,9 +101,43 @@ module.exports = yeoman.Base.extend({
         }
       );
     });
+
+    this.fs.copyTpl(
+      this.templatePath('index.html'),
+      this.destinationPath('index.html'),
+      {
+        campaignName: this.props.campaignName,
+        sizes: this.props.sizes
+      }
+    );
+
+    this.fs.copyTpl(
+      this.templatePath('README.md'),
+      this.destinationPath('README.md'),
+      {
+        campaignName: this.props.campaignName
+      }
+    );
+
+    this.fs.copy(
+      this.templatePath('gitignore'),
+      this.destinationPath('.gitignore')
+    );
   },
 
+  // Install any additional node or bower dependencies
   install: function () {
     this.npmInstall();
+  },
+
+  // Perform any additional actions after installation is complete
+  end: function() {
+
+    var message = chalk.cyan('Install complete! ');
+    message += chalk.yellow('Run ');
+    message += chalk.gray('gulp serve');
+    message += chalk.yellow(' from your command line to run banners locally.');
+
+    this.log(message);
   }
 });
