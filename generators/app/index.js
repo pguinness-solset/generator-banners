@@ -44,12 +44,10 @@ module.exports = yeoman.Base.extend({
         var height = Math.floor(dimensions[1]).toString();
 
         if (width !== dimensions[0]) {
-          console.log('Width', width, 'Dimension', dimensions[0]);
           return self.env.error(chalk.red('Invalid width entered in the following banner size: ' + value));
         }
 
         if (height !== dimensions[1]) {
-          console.log('Height', height, 'Dimension', dimensions[1]);
           return self.env.error(chalk.red('Invalid height entered in the following banner size: ' + value));
         }
 
