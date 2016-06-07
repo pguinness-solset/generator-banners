@@ -7,9 +7,7 @@ module.exports = yeoman.Base.extend({
 
   // Prompt user for project info before install
   prompting: function () {
-    
     var done = this.async();
-    var greeting = 'This action will create a scaffold for HTML5 banner projects.';
 
     this.log(yosay(
       'This action will create a scaffold for ' + chalk.blue('HTML5 banner projects') + '.'
@@ -19,11 +17,11 @@ module.exports = yeoman.Base.extend({
       type: 'input',
       name: 'campaignName',
       message: 'Enter the name of this campaign:'
-    },{
+    }, {
       type: 'input',
       name: 'sizes',
       message: 'Enter the banner sizes you would like to create as a comma-separated list (728x90, 300x250, 160x600):'
-    },{
+    }, {
       type: 'confirm',
       name: 'includeEnabler',
       message: 'Would you like to include Enabler?',
@@ -31,13 +29,11 @@ module.exports = yeoman.Base.extend({
     }];
 
     return this.prompt(prompts).then(function (answers) {
-
       var self = this;
       var tmpSizes = answers.sizes.replace(/\s/g, '').split(',');
-      var numSizes = tmpSizes.length;
       var sizes = [];
 
-      tmpSizes.forEach(function(value){
+      tmpSizes.forEach(function (value) {
         var dimensions = value.split('x');
 
         if (!dimensions[0] || !dimensions[1]) {
@@ -71,7 +67,6 @@ module.exports = yeoman.Base.extend({
 
   // Create scaffold files
   writing: function () {
-
     var self = this;
 
     this.fs.copy(
@@ -84,8 +79,7 @@ module.exports = yeoman.Base.extend({
       this.destinationPath('gulpfile.js')
     );
 
-    this.props.sizes.forEach(function(value){
-
+    this.props.sizes.forEach(function (value) {
       var width = value[0];
       var height = value[1];
       var dirName = width + 'x' + height;
@@ -136,7 +130,6 @@ module.exports = yeoman.Base.extend({
 
   // Perform any additional actions after installation is complete
   end: function () {
-
     var message = chalk.cyan('Install complete! ');
     message += chalk.yellow('Run ');
     message += chalk.gray('gulp serve');

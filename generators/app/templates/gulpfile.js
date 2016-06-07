@@ -15,5 +15,3 @@ gulp.task('serve', () => {
     './**/*.html'
   ]).on('change', reload);
 });
-
-
