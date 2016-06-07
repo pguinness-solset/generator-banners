@@ -90,6 +90,7 @@ module.exports = yeoman.Base.extend({
       var height = value[1];
       var dirName = width + 'x' + height;
 
+      // create separate folders for each banner
       self.fs.copyTpl(
         self.templatePath('banner.html'),
         self.destinationPath(dirName + '/index.html'),
@@ -102,6 +103,7 @@ module.exports = yeoman.Base.extend({
       );
     });
 
+    // create an index page with links to banners
     this.fs.copyTpl(
       this.templatePath('index.html'),
       this.destinationPath('index.html'),
@@ -111,6 +113,7 @@ module.exports = yeoman.Base.extend({
       }
     );
 
+    // create README
     this.fs.copyTpl(
       this.templatePath('README.md'),
       this.destinationPath('README.md'),
@@ -119,6 +122,7 @@ module.exports = yeoman.Base.extend({
       }
     );
 
+    // create .gitignore
     this.fs.copy(
       this.templatePath('gitignore'),
       this.destinationPath('.gitignore')
@@ -131,7 +135,7 @@ module.exports = yeoman.Base.extend({
   },
 
   // Perform any additional actions after installation is complete
-  end: function() {
+  end: function () {
 
     var message = chalk.cyan('Install complete! ');
     message += chalk.yellow('Run ');
